@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #0B0A0A;
+    --bg-secondary: #151111;
+    --ivory: #E8DDD0;
+    --champagne: #BFA78C;
+    --smoked-plum: #4A3543;
+    --deep-burgundy: #2D1017;
+    --metallic-grey: #8C8984;
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    background-color: var(--bg-primary);
+    color: var(--ivory);
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+
+  /* Custom luxury scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0B0A0A;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2D2329;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4A3543;
+  }
+}
+
+.section-anchor {
+  scroll-margin-top: 6.5rem;
+}
+
+.paper-texture {
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(232, 221, 208, 0.1) 0 0.7px, transparent 1px),
+    radial-gradient(circle at 70% 65%, rgba(191, 167, 140, 0.08) 0 0.6px, transparent 0.95px),
+    repeating-linear-gradient(101deg, transparent 0 5px, rgba(255, 255, 255, 0.016) 6px, transparent 7px),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.025), transparent 35%, rgba(255, 255, 255, 0.014));
+  background-size: 6px 6px, 9px 9px, 19px 23px, 100% 100%;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.site-texture::before,
+.site-texture::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.site-texture::before {
+  opacity: 0.17;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.62'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: soft-light;
+}
+
+.object-preview {
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(ellipse 95% 105% at 50% 50%, #000 0 72%, transparent 100%);
+  mask-image: radial-gradient(ellipse 95% 105% at 50% 50%, #000 0 72%, transparent 100%);
+}
+
+.site-texture::after {
+  opacity: 0.32;
+  background:
+    radial-gradient(ellipse at 18% 28%, rgba(133, 105, 82, 0.08), transparent 35%),
+    radial-gradient(ellipse at 82% 64%, rgba(69, 47, 57, 0.12), transparent 38%),
+    linear-gradient(102deg, transparent 0 48%, rgba(232, 221, 208, 0.018) 50%, transparent 53%);
+  mix-blend-mode: soft-light;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(4px);
+}
+
+/* Arch Shape Utilities */
+.arch-top {
+  border-radius: 9999px 9999px 0 0;
+}
+
+.arch-full {
+  border-radius: 9999px;
+}
+
+/* Vertical Ribbed Glass Fluting effect */
+.fluted-ribs {
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(232, 221, 208, 0.03) 0px,
+    rgba(232, 221, 208, 0.03) 2px,
+    transparent 2px,
+    transparent 8px
+  );
+}
+
+.fluted-ribs-dense {
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(191, 167, 140, 0.05) 0px,
+    rgba(191, 167, 140, 0.05) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+/* Fine atmospheric grain overlay */
+.bg-grain {
+  background-image: radial-gradient(rgba(232, 221, 208, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Celestial glow gradient */
+.radial-halo {
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(191, 167, 140, 0.18) 0%,
+    rgba(74, 53, 67, 0.12) 35%,
+    rgba(45, 16, 23, 0.05) 60%,
+    transparent 80%
+  );
+}
+
+.water-reflection {
+  background: linear-gradient(
+    180deg,
+    rgba(11, 10, 10, 0.1) 0%,
+    rgba(15, 12, 14, 0.6) 50%,
+    rgba(11, 10, 10, 0.98) 100%
+  );
+}
+
+/* Lettering with celestial dot in 'O' */
+.celestial-o {
+  position: relative;
+  display: inline-block;
+}
+.celestial-o::after {
+  content: '·';
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  font-size: 0.9em;
+  color: #BFA78C;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-anchor {
+    scroll-margin-top: 7.5rem;
+  }
+}
