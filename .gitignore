@@ -1,9 +1,13 @@
+# Dependencies and generated output
 node_modules/
 dist/
+
+# Local Vercel metadata and secrets
 .vercel/
 .env
 .env.*
 !.env.example
+
+# Local logs and one-off QA artifacts
 *.log
 test-qa.cjs
-
