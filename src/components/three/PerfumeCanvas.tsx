@@ -141,7 +141,7 @@ export const PerfumeCanvas: React.FC = () => {
       <img
         src="/images/peacock-object.png"
         alt=""
-        className={`absolute left-[49%] top-1/2 h-[82vh] w-[48vw] -translate-y-1/2 object-contain transition-opacity duration-1000 ${
+        className={`object-preview absolute left-[49%] top-1/2 h-[82vh] w-[48vw] -translate-y-1/2 object-contain transition-opacity duration-1000 ${
           modelReady ? 'opacity-0' : 'opacity-100'
         }`}
       />

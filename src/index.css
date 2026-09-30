@@ -68,6 +68,27 @@
   pointer-events: none;
 }
 
+.site-texture {
+  background-color: var(--bg-primary);
+}
+
+.site-surface-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(7, 6, 6, 0.68), rgba(7, 6, 6, 0.82)),
+    url('/images/site-background-texture.png');
+  background-position: center, center 22%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.site-texture .paper-texture {
+  opacity: 0.2;
+}
+
 .site-texture::before,
 .site-texture::after {
   content: '';
@@ -78,7 +99,7 @@
 }
 
 .site-texture::before {
-  opacity: 0.17;
+  opacity: 0.055;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.62'/%3E%3C/svg%3E");
   background-size: 180px 180px;
   mix-blend-mode: soft-light;
@@ -88,6 +109,20 @@
   mix-blend-mode: screen;
   -webkit-mask-image: radial-gradient(ellipse 95% 105% at 50% 50%, #000 0 72%, transparent 100%);
   mask-image: radial-gradient(ellipse 95% 105% at 50% 50%, #000 0 72%, transparent 100%);
+}
+
+.mobile-object-stage::before {
+  content: '';
+  position: absolute;
+  inset: -24% -18%;
+  background: radial-gradient(
+    ellipse 72% 76% at 50% 52%,
+    rgba(0, 0, 0, 0.99) 0 60%,
+    rgba(2, 2, 2, 0.88) 70%,
+    rgba(5, 4, 4, 0.42) 82%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .site-texture::after {

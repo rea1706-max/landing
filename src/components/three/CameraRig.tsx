@@ -15,7 +15,8 @@ const Y_FACTORS = [0, -0.01, -0.02, -0.04];
 const SCALE_FACTORS = [0.82, 0.72, 0.78, 0.82];
 const ROTATIONS = [0, 0.45, 0.82, Math.PI * 2];
 const MAX_IDLE_YAW = THREE.MathUtils.degToRad(2);
-const MOTION_DAMPING = 2.35;
+const SCROLL_DAMPING = 1.55;
+const ROTATION_DAMPING = 2.8;
 
 const sampleStage = (values: number[], stage: number) => {
   const from = Math.min(Math.floor(stage), values.length - 1);
@@ -82,13 +83,13 @@ export const CameraRig: React.FC<CameraRigProps> = ({ mouse, onModelReady }) => 
     const targetY = sampleStage(Y_FACTORS, stage) * viewport.height + sculpturalLift;
     const targetScale = sampleStage(SCALE_FACTORS, stage) * viewport.height;
 
-    model.position.x = THREE.MathUtils.damp(model.position.x, targetX, MOTION_DAMPING, delta);
-    model.position.y = THREE.MathUtils.damp(model.position.y, targetY, MOTION_DAMPING, delta);
-    model.position.z = THREE.MathUtils.damp(model.position.z, sculpturalDepth, MOTION_DAMPING, delta);
-    model.rotation.x = THREE.MathUtils.damp(model.rotation.x, targetPitch, MOTION_DAMPING, delta);
-    model.rotation.y = THREE.MathUtils.damp(model.rotation.y, targetYaw, MOTION_DAMPING, delta);
+    model.position.x = THREE.MathUtils.damp(model.position.x, targetX, SCROLL_DAMPING, delta);
+    model.position.y = THREE.MathUtils.damp(model.position.y, targetY, SCROLL_DAMPING, delta);
+    model.position.z = THREE.MathUtils.damp(model.position.z, sculpturalDepth, SCROLL_DAMPING, delta);
+    model.rotation.x = THREE.MathUtils.damp(model.rotation.x, targetPitch, ROTATION_DAMPING, delta);
+    model.rotation.y = THREE.MathUtils.damp(model.rotation.y, targetYaw, ROTATION_DAMPING, delta);
 
-    const scale = THREE.MathUtils.damp(model.scale.x, targetScale, MOTION_DAMPING, delta);
+    const scale = THREE.MathUtils.damp(model.scale.x, targetScale, SCROLL_DAMPING, delta);
     model.scale.setScalar(scale);
   });
 

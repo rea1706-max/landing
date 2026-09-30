@@ -12,10 +12,11 @@ export const CompositionSection: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="composition" className="section-anchor relative w-full border-y border-champagne/10 bg-[#100e0e] px-5 py-24 md:px-10 md:py-32">
+    <section id="composition" className="section-anchor relative w-full border-b border-champagne/10 bg-[#100e0e]/78 px-5 py-24 md:px-10 md:py-32">
+      <div className="pointer-events-none absolute inset-x-0 -top-36 h-36 bg-gradient-to-b from-transparent to-[#100e0e]/80" aria-hidden="true" />
       <div className="paper-texture absolute inset-0 opacity-50" aria-hidden="true" />
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-10">
-        <div className="z-20 flex flex-col items-start lg:col-span-4 lg:sticky lg:top-32 lg:self-start" data-reveal>
+        <div className="z-20 flex flex-col items-start lg:col-span-4 lg:sticky lg:top-32 lg:self-start" data-composition-intro>
           <SectionLabel label={t.composition.label} />
           <h2 className="mt-8 font-serif text-5xl font-light leading-[0.9] tracking-[-0.02em] text-ivory sm:text-6xl lg:text-7xl">
             <span className="block">{t.composition.titleLine1}</span>

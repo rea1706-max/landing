@@ -30,17 +30,36 @@ export function AppContent() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
-      gsap.to('#hero h1', {
-        y: -28,
-        opacity: 0.82,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.8,
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: '#hero',
+            start: 'top top',
+            end: 'bottom 18%',
+            scrub: 1.6,
+            invalidateOnRefresh: true,
+          },
+        })
+        .to('[data-hero-copy]', { y: -58, opacity: 0.24, filter: 'blur(2px)', ease: 'none' }, 0)
+        .to('[data-hero-meta]', { y: -18, opacity: 0, ease: 'none' }, 0)
+        .to('[data-hero-veil]', { opacity: 1, ease: 'none' }, 0);
+
+      gsap.fromTo(
+        '[data-composition-intro]',
+        { y: 72, opacity: 0.16 },
+        {
+          y: 0,
+          opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#composition',
+            start: 'top 92%',
+            end: 'top 42%',
+            scrub: 1.35,
+            invalidateOnRefresh: true,
+          },
         },
-      });
+      );
 
       gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
         gsap.from(element, {
@@ -98,6 +117,7 @@ export function AppContent() {
 
   return (
     <div ref={containerRef} className="site-texture relative min-h-screen overflow-x-clip bg-[#0B0A0A] text-[#E8DDD0]">
+      <div className="site-surface-layer" aria-hidden="true" />
       <Navigation />
       {render3D ? (
         <Suspense fallback={null}>
