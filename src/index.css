@@ -109,6 +109,17 @@
   filter: drop-shadow(0 22px 36px rgba(0, 0, 0, 0.32));
 }
 
+.hero-model-poster {
+  position: absolute;
+  left: 72.98vw;
+  top: 8.53vh;
+  height: 86.95vh;
+  width: auto;
+  max-width: none;
+  transform: translateX(-50%);
+  object-fit: contain;
+}
+
 .site-texture::after {
   opacity: 0.32;
   background:

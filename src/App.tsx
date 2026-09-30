@@ -170,10 +170,10 @@ export function AppContent() {
           aria-hidden="true"
         >
           <img
-            src="/images/peacock-object-transparent.png"
+            src="/images/peacock-object-glb-neutral.png"
             alt=""
             fetchPriority="high"
-            className={`object-preview absolute left-[49%] top-1/2 h-[82vh] w-[48vw] -translate-y-1/2 object-contain transition-opacity duration-300 ${
+            className={`hero-model-poster transition-opacity duration-300 ${
               modelReady || !heroVisible ? 'opacity-0' : 'opacity-100'
             }`}
           />

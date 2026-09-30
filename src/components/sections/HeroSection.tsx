@@ -19,7 +19,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
       />
 
       <div className="relative z-20 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-12">
-        <div className="order-2 flex max-w-xl flex-col items-start lg:order-1 lg:col-span-5" data-hero-copy data-reveal>
+        <div className="order-2 flex max-w-xl flex-col items-start lg:order-1 lg:col-span-5" data-hero-copy>
           <p className="mb-7 text-[0.7rem] font-medium tracking-[0.24em] text-champagne/85">
             {t.hero.eyebrow}
           </p>
@@ -42,7 +42,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
         <div className="order-1 flex min-h-[28vh] items-center justify-center lg:order-2 lg:col-span-7 lg:min-h-[76vh]">
           <div className="mobile-object-stage relative h-[30vh] w-[86vw] max-w-[430px] md:hidden">
             <img
-              src="/images/peacock-object-transparent.png"
+              src="/images/peacock-object-glb-neutral.png"
               alt={t.hero.imageAlt}
               fetchPriority="high"
               className="object-preview relative z-10 h-full w-full object-contain object-bottom"
