@@ -11,7 +11,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
   return (
     <section id="hero" className="relative flex min-h-[100svh] w-full items-center overflow-hidden px-5 pb-10 pt-36 md:px-10 md:pt-28">
       <div className="paper-texture absolute inset-0 opacity-60" aria-hidden="true" />
-      <div className="absolute inset-y-0 right-0 hidden w-[55%] border-l border-champagne/10 bg-[linear-gradient(90deg,transparent,rgba(74,53,67,0.12))] lg:block" aria-hidden="true" />
+      <div className="absolute inset-y-0 right-0 hidden w-[55%] bg-[linear-gradient(90deg,transparent,rgba(74,53,67,0.12))] lg:block" aria-hidden="true" />
       <div
         data-hero-veil
         className="absolute inset-x-0 bottom-0 h-[34vh] bg-gradient-to-b from-transparent via-[#100e0e]/35 to-[#100e0e]/95 opacity-0"
@@ -42,8 +42,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
         <div className="order-1 flex min-h-[28vh] items-center justify-center lg:order-2 lg:col-span-7 lg:min-h-[76vh]">
           <div className="mobile-object-stage relative h-[30vh] w-[86vw] max-w-[430px] md:hidden">
             <img
-              src="/images/peacock-object.png"
+              src="/images/peacock-object-transparent.png"
               alt={t.hero.imageAlt}
+              fetchPriority="high"
               className="object-preview relative z-10 h-full w-full object-contain object-bottom"
             />
           </div>

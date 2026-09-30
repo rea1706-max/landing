@@ -24,7 +24,7 @@ export const ObjectSection: React.FC = () => {
           </div>
 
           <div className="min-h-[56vh] lg:col-span-5" aria-hidden="true">
-            <img src="/images/peacock-object.png" alt="" className="object-preview h-full w-full object-contain md:hidden" loading="lazy" />
+            <img src="/images/peacock-object-transparent.png" alt="" className="object-preview h-full w-full object-contain md:hidden" loading="lazy" />
           </div>
 
           <aside className="self-start border border-champagne/16 bg-[#11100f]/80 p-7 backdrop-blur-md lg:col-span-3" data-reveal>

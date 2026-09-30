@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LanguageProvider } from './context/LanguageContext';
@@ -18,12 +18,27 @@ const PerfumeCanvas = lazy(() =>
 export function AppContent() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [render3D, setRender3D] = useState(() => window.matchMedia('(min-width: 768px)').matches);
+  const [modelReady, setModelReady] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(true);
+  const handleModelReady = useCallback(() => setModelReady(true), []);
 
   useEffect(() => {
     const media = window.matchMedia('(min-width: 768px)');
     const handleChange = () => setRender3D(media.matches);
     media.addEventListener('change', handleChange);
     return () => media.removeEventListener('change', handleChange);
+  }, []);
+
+  useEffect(() => {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { threshold: 0.01 },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
   useLayoutEffect(() => {
@@ -56,6 +71,35 @@ export function AppContent() {
             start: 'top 92%',
             end: 'top 42%',
             scrub: 1.35,
+            invalidateOnRefresh: true,
+          },
+        },
+      );
+
+      gsap.to('[data-object-visual]', {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#composition',
+          start: 'top 96%',
+          end: 'top 68%',
+          scrub: 1.15,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      gsap.fromTo(
+        '[data-object-visual]',
+        { opacity: 0 },
+        {
+          opacity: 1,
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: '#object',
+            start: 'top 94%',
+            end: 'top 68%',
+            scrub: 1.15,
             invalidateOnRefresh: true,
           },
         },
@@ -120,9 +164,23 @@ export function AppContent() {
       <div className="site-surface-layer" aria-hidden="true" />
       <Navigation />
       {render3D ? (
-        <Suspense fallback={null}>
-          <PerfumeCanvas />
-        </Suspense>
+        <div
+          data-object-visual
+          className="pointer-events-none fixed inset-0 z-10 hidden overflow-hidden md:block"
+          aria-hidden="true"
+        >
+          <img
+            src="/images/peacock-object-transparent.png"
+            alt=""
+            fetchPriority="high"
+            className={`object-preview absolute left-[49%] top-1/2 h-[82vh] w-[48vw] -translate-y-1/2 object-contain transition-opacity duration-300 ${
+              modelReady || !heroVisible ? 'opacity-0' : 'opacity-100'
+            }`}
+          />
+          <Suspense fallback={null}>
+            <PerfumeCanvas onModelReady={handleModelReady} />
+          </Suspense>
+        </div>
       ) : null}
       <main className="relative z-20">
         <HeroSection onDiscoverClick={handleDiscoverClick} />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 
 const scrollToSection = (id: string) => {
@@ -7,14 +7,6 @@ const scrollToSection = (id: string) => {
 
 export const Navigation: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 24);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const items = [
     ['hero', t.nav.home],
@@ -24,13 +16,7 @@ export const Navigation: React.FC = () => {
   ];
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-500 ${
-        scrolled
-          ? 'border-champagne/15 bg-[#0b0a0a]/94 backdrop-blur-xl'
-          : 'border-transparent bg-gradient-to-b from-[#0b0a0a]/95 to-transparent'
-      }`}
-    >
+    <header className="fixed inset-x-0 top-0 z-50">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 pb-3 pt-4 md:px-10 md:py-5">
         <button
           type="button"

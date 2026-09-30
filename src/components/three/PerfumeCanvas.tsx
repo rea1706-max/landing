@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import { CameraRig } from './CameraRig';
@@ -16,7 +16,11 @@ export interface PointerMotion {
   lastY: number;
 }
 
-export const PerfumeCanvas: React.FC = () => {
+interface PerfumeCanvasProps {
+  onModelReady: () => void;
+}
+
+export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({ onModelReady }) => {
   const pointer = useRef<PointerMotion>({
     x: 0,
     y: 0,
@@ -28,9 +32,6 @@ export const PerfumeCanvas: React.FC = () => {
     lastX: 0,
     lastY: 0,
   });
-  const [modelReady, setModelReady] = useState(false);
-  const handleModelReady = useCallback(() => setModelReady(true), []);
-
   useEffect(() => {
     const coarseQuery = window.matchMedia('(pointer: coarse)');
 
@@ -133,20 +134,8 @@ export const PerfumeCanvas: React.FC = () => {
   }, []);
 
   return (
-    <div
-      data-hero-scene
-      className="pointer-events-none fixed inset-0 z-10 hidden overflow-hidden md:block"
-      aria-hidden="true"
-    >
-      <img
-        src="/images/peacock-object.png"
-        alt=""
-        className={`object-preview absolute left-[49%] top-1/2 h-[82vh] w-[48vw] -translate-y-1/2 object-contain transition-opacity duration-1000 ${
-          modelReady ? 'opacity-0' : 'opacity-100'
-        }`}
-      />
-
       <Canvas
+        className="absolute inset-0"
         camera={{ position: [0, 0, 5.2], fov: 32, near: 0.1, far: 100 }}
         dpr={[1, 1.3]}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
@@ -156,10 +145,9 @@ export const PerfumeCanvas: React.FC = () => {
       >
         <Lighting mouse={pointer} />
         <Suspense fallback={null}>
-          <CameraRig mouse={pointer} onModelReady={handleModelReady} />
+          <CameraRig mouse={pointer} onModelReady={onModelReady} />
           <Environment preset="warehouse" environmentIntensity={0.68} />
         </Suspense>
       </Canvas>
-    </div>
   );
 };

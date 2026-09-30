@@ -106,23 +106,7 @@
 }
 
 .object-preview {
-  mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(ellipse 95% 105% at 50% 50%, #000 0 72%, transparent 100%);
-  mask-image: radial-gradient(ellipse 95% 105% at 50% 50%, #000 0 72%, transparent 100%);
-}
-
-.mobile-object-stage::before {
-  content: '';
-  position: absolute;
-  inset: -24% -18%;
-  background: radial-gradient(
-    ellipse 72% 76% at 50% 52%,
-    rgba(0, 0, 0, 0.99) 0 60%,
-    rgba(2, 2, 2, 0.88) 70%,
-    rgba(5, 4, 4, 0.42) 82%,
-    transparent 100%
-  );
-  pointer-events: none;
+  filter: drop-shadow(0 22px 36px rgba(0, 0, 0, 0.32));
 }
 
 .site-texture::after {
