@@ -45,6 +45,8 @@ export function AppContent() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
+      const objectVisual = containerRef.current?.querySelector<HTMLElement>('[data-object-visual]');
+
       gsap
         .timeline({
           scrollTrigger: {
@@ -76,34 +78,36 @@ export function AppContent() {
         },
       );
 
-      gsap.to('[data-object-visual]', {
-        opacity: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#composition',
-          start: 'top 96%',
-          end: 'top 68%',
-          scrub: 1.15,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      gsap.fromTo(
-        '[data-object-visual]',
-        { opacity: 0 },
-        {
-          opacity: 1,
+      if (objectVisual) {
+        gsap.to(objectVisual, {
+          opacity: 0,
           ease: 'none',
-          immediateRender: false,
           scrollTrigger: {
-            trigger: '#object',
-            start: 'top 94%',
+            trigger: '#composition',
+            start: 'top 96%',
             end: 'top 68%',
             scrub: 1.15,
             invalidateOnRefresh: true,
           },
-        },
-      );
+        });
+
+        gsap.fromTo(
+          objectVisual,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            ease: 'none',
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: '#object',
+              start: 'top 94%',
+              end: 'top 68%',
+              scrub: 1.15,
+              invalidateOnRefresh: true,
+            },
+          },
+        );
+      }
 
       gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
         gsap.from(element, {
@@ -150,7 +154,7 @@ export function AppContent() {
 
     ScrollTrigger.refresh();
     return () => ctx.revert();
-  }, []);
+  }, [render3D]);
 
   const handleDiscoverClick = () => {
     const el = document.getElementById('composition');
