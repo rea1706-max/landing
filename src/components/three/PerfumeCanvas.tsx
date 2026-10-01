@@ -34,6 +34,9 @@ export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({ onModelReady }) =>
   });
   useEffect(() => {
     const coarseQuery = window.matchMedia('(pointer: coarse)');
+    const interactionZones = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-model-interaction-zone]'),
+    );
 
     const releaseDrag = () => {
       pointer.current.dragging = false;
@@ -50,41 +53,43 @@ export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({ onModelReady }) =>
 
     const updatePointerMode = () => {
       pointer.current.coarse = coarseQuery.matches;
-      if (coarseQuery.matches) resetPointer();
     };
 
     const isInsideObjectZone = (clientX: number, clientY: number) => {
-      const hero = document.getElementById('hero');
-      if (!hero) return false;
-
-      const bounds = hero.getBoundingClientRect();
-      const insideHero = clientY >= bounds.top + bounds.height * 0.08
-        && clientY <= bounds.bottom - bounds.height * 0.05;
-      const insideModelZone = clientX >= window.innerWidth * 0.5
-        && clientX <= window.innerWidth * 0.96;
-
-      return insideHero && insideModelZone;
+      return interactionZones.some((zone) => {
+        const bounds = zone.getBoundingClientRect();
+        return bounds.width > 0
+          && bounds.height > 0
+          && clientX >= bounds.left
+          && clientX <= bounds.right
+          && clientY >= bounds.top
+          && clientY <= bounds.bottom;
+      });
     };
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (pointer.current.coarse || event.button !== 0 || !isInsideObjectZone(event.clientX, event.clientY)) return;
+      const isPrimaryMouseButton = event.pointerType !== 'mouse' || event.button === 0;
+      if (!isPrimaryMouseButton || pointer.current.dragging || !isInsideObjectZone(event.clientX, event.clientY)) return;
 
       event.preventDefault();
       pointer.current.dragging = true;
       pointer.current.active = 1;
+      pointer.current.x = Math.min(1, Math.max(-1, (event.clientX / window.innerWidth) * 2 - 1));
+      pointer.current.y = Math.min(1, Math.max(-1, (event.clientY / window.innerHeight) * 2 - 1));
       pointer.current.lastX = event.clientX;
       pointer.current.lastY = event.clientY;
       document.body.style.userSelect = 'none';
-      document.body.style.cursor = 'grabbing';
+      if (event.pointerType === 'mouse') document.body.style.cursor = 'grabbing';
     };
 
     const handlePointerMove = (event: PointerEvent) => {
-      if (pointer.current.coarse) return;
+      if (event.pointerType !== 'mouse' && !pointer.current.dragging) return;
 
       pointer.current.x = Math.min(1, Math.max(-1, (event.clientX / window.innerWidth) * 2 - 1));
       pointer.current.y = Math.min(1, Math.max(-1, (event.clientY / window.innerHeight) * 2 - 1));
 
       if (pointer.current.dragging) {
+        if (event.cancelable) event.preventDefault();
         const deltaX = event.clientX - pointer.current.lastX;
         const deltaY = event.clientY - pointer.current.lastY;
         pointer.current.yaw += deltaX * 0.012;
@@ -95,13 +100,13 @@ export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({ onModelReady }) =>
         pointer.current.lastX = event.clientX;
         pointer.current.lastY = event.clientY;
         pointer.current.active = 1;
-        document.body.style.cursor = 'grabbing';
+        if (event.pointerType === 'mouse') document.body.style.cursor = 'grabbing';
         return;
       }
 
       const insideObjectZone = isInsideObjectZone(event.clientX, event.clientY);
       pointer.current.active = insideObjectZone ? 1 : 0;
-      document.body.style.cursor = insideObjectZone ? 'grab' : '';
+      if (event.pointerType === 'mouse') document.body.style.cursor = insideObjectZone ? 'grab' : '';
     };
 
     const handlePointerUp = (event: PointerEvent) => {
@@ -109,12 +114,12 @@ export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({ onModelReady }) =>
       pointer.current.dragging = false;
       pointer.current.active = isInsideObjectZone(event.clientX, event.clientY) ? 1 : 0;
       document.body.style.userSelect = '';
-      document.body.style.cursor = pointer.current.active ? 'grab' : '';
+      document.body.style.cursor = event.pointerType === 'mouse' && pointer.current.active ? 'grab' : '';
     };
 
     updatePointerMode();
     window.addEventListener('pointerdown', handlePointerDown);
-    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('pointermove', handlePointerMove, { passive: false });
     window.addEventListener('pointerup', handlePointerUp);
     window.addEventListener('pointercancel', resetPointer);
     window.addEventListener('blur', resetPointer);

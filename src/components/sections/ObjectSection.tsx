@@ -23,9 +23,12 @@ export const ObjectSection: React.FC = () => {
             <p className="mt-5 max-w-sm text-base leading-7 text-ivory/52">{t.objectStory.body2}</p>
           </div>
 
-          <div className="min-h-[56vh] lg:col-span-5" aria-hidden="true">
-            <img src="/images/peacock-object-glb-neutral.png" alt="" className="object-preview h-full w-full object-contain md:hidden" loading="lazy" />
-          </div>
+          <div
+            data-object-stage
+            data-model-interaction-zone
+            className="min-h-[58svh] touch-none cursor-grab active:cursor-grabbing md:min-h-[68vh] lg:col-span-5"
+            aria-hidden="true"
+          />
 
           <aside className="self-start border border-champagne/16 bg-[#11100f]/80 p-7 backdrop-blur-md lg:col-span-3" data-reveal>
             <SectionLabel label={t.objectStory.storyLabel} hasLine={false} />

@@ -39,16 +39,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
           </button>
         </div>
 
-        <div className="order-1 flex min-h-[28vh] items-center justify-center lg:order-2 lg:col-span-7 lg:min-h-[76vh]">
-          <div className="mobile-object-stage relative h-[30vh] w-[86vw] max-w-[430px] md:hidden">
-            <img
-              src="/images/peacock-object-glb-neutral.png"
-              alt={t.hero.imageAlt}
-              fetchPriority="high"
-              className="object-preview relative z-10 h-full w-full object-contain object-bottom"
-            />
-          </div>
-          <div className="relative hidden h-[74vh] w-full md:block">
+        <div className="order-1 flex items-center justify-center lg:order-2 lg:col-span-7">
+          <div
+            data-model-interaction-zone
+            className="relative h-[34svh] min-h-[250px] w-full touch-none cursor-grab active:cursor-grabbing md:h-[42svh] md:max-h-[460px] md:min-h-[320px] lg:h-[76vh] lg:max-h-none lg:min-h-0"
+          >
             <span className="sr-only">{t.hero.imageAlt}</span>
           </div>
         </div>

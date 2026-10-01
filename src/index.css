@@ -111,13 +111,32 @@
 
 .hero-model-poster {
   position: absolute;
-  left: 72.98vw;
-  top: 8.53vh;
-  height: 86.95vh;
+  left: 50vw;
+  top: 15svh;
+  height: 34svh;
   width: auto;
-  max-width: none;
+  max-width: 92vw;
   transform: translateX(-50%);
   object-fit: contain;
+  will-change: opacity;
+}
+
+@media (min-width: 768px) {
+  .hero-model-poster {
+    left: 50vw;
+    top: 11vh;
+    height: 42vh;
+    max-width: 72vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-model-poster {
+    left: 72.98vw;
+    top: 8.53vh;
+    height: 86.95vh;
+    max-width: none;
+  }
 }
 
 .site-texture::after {

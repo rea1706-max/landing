@@ -10,13 +10,42 @@ interface CameraRigProps {
 }
 
 const SECTION_IDS = ['hero', 'composition', 'object', 'final'];
-const X_FACTORS = [0.23, -0.07, 0.03, 0];
-const Y_FACTORS = [0, -0.01, -0.02, -0.04];
-const SCALE_FACTORS = [0.82, 0.72, 0.78, 0.82];
 const ROTATIONS = [0, 0.45, 0.82, Math.PI * 2];
 const MAX_IDLE_YAW = THREE.MathUtils.degToRad(2);
+const MAX_HOVER_YAW = THREE.MathUtils.degToRad(5);
+const MAX_HOVER_PITCH = THREE.MathUtils.degToRad(1.5);
 const SCROLL_DAMPING = 1.55;
 const ROTATION_DAMPING = 2.8;
+
+interface MotionProfile {
+  x: number[];
+  y: number[];
+  scale: number[];
+}
+
+const MOBILE_PROFILE: MotionProfile = {
+  x: [0, -0.02, 0, 0],
+  y: [0.18, 0.08, 0.02, -0.18],
+  scale: [0.34, 0.3, 0.5, 0.46],
+};
+
+const TABLET_PROFILE: MotionProfile = {
+  x: [0, -0.03, 0, 0],
+  y: [0.18, 0.08, 0.02, -0.14],
+  scale: [0.42, 0.36, 0.56, 0.52],
+};
+
+const DESKTOP_PROFILE: MotionProfile = {
+  x: [0.23, -0.07, 0.03, 0],
+  y: [0, -0.01, -0.02, -0.04],
+  scale: [0.82, 0.72, 0.78, 0.82],
+};
+
+const getMotionProfile = (width: number) => {
+  if (width < 768) return MOBILE_PROFILE;
+  if (width < 1024) return TABLET_PROFILE;
+  return DESKTOP_PROFILE;
+};
 
 const sampleStage = (values: number[], stage: number) => {
   const from = Math.min(Math.floor(stage), values.length - 1);
@@ -25,9 +54,10 @@ const sampleStage = (values: number[], stage: number) => {
 };
 
 export const CameraRig: React.FC<CameraRigProps> = ({ mouse, onModelReady }) => {
-  const { camera, viewport } = useThree();
+  const { camera, size, viewport } = useThree();
   const modelRef = useRef<THREE.Group>(null);
   const sectionTops = useRef<number[]>([]);
+  const profile = getMotionProfile(size.width);
 
   useEffect(() => {
     const measureSections = () => {
@@ -66,22 +96,27 @@ export const CameraRig: React.FC<CameraRigProps> = ({ mouse, onModelReady }) => 
       if (scrollY >= tops[tops.length - 1]) stage = tops.length - 1;
     }
 
-    const idleYaw = mouse.current.coarse && stage < 1
+    const heroInteraction = 1 - THREE.MathUtils.smoothstep(stage, 0.18, 0.95);
+    const objectInteraction = THREE.MathUtils.smoothstep(stage, 1.88, 2.12);
+    const interactionWeight = Math.max(heroInteraction, objectInteraction);
+    const idleYaw = mouse.current.coarse && !mouse.current.dragging && interactionWeight > 0
       ? Math.sin(clock.elapsedTime * 0.13) * MAX_IDLE_YAW
       : 0;
     const baseYaw = sampleStage(ROTATIONS, stage);
-    const heroPoseWeight = 1 - THREE.MathUtils.smoothstep(stage, 0.18, 1);
-    const heldYaw = mouse.current.coarse ? idleYaw : mouse.current.yaw;
-    const heldPitch = mouse.current.coarse ? 0 : mouse.current.pitch;
-    const targetYaw = THREE.MathUtils.lerp(baseYaw, heldYaw, heroPoseWeight);
-    const targetPitch = heldPitch * heroPoseWeight;
+    const hoverWeight = !mouse.current.coarse && !mouse.current.dragging
+      ? mouse.current.active * interactionWeight
+      : 0;
+    const hoverYaw = mouse.current.x * MAX_HOVER_YAW * hoverWeight;
+    const hoverPitch = -mouse.current.y * MAX_HOVER_PITCH * hoverWeight;
+    const targetYaw = baseYaw + (mouse.current.yaw + hoverYaw + idleYaw) * interactionWeight;
+    const targetPitch = (mouse.current.pitch + hoverPitch) * interactionWeight;
 
     const objectProgress = THREE.MathUtils.clamp(stage - 2, 0, 1);
     const sculpturalLift = Math.sin(objectProgress * Math.PI) * viewport.height * 0.04;
     const sculpturalDepth = Math.sin(objectProgress * Math.PI * 2) * 0.08;
-    const targetX = sampleStage(X_FACTORS, stage) * viewport.width;
-    const targetY = sampleStage(Y_FACTORS, stage) * viewport.height + sculpturalLift;
-    const targetScale = sampleStage(SCALE_FACTORS, stage) * viewport.height;
+    const targetX = sampleStage(profile.x, stage) * viewport.width;
+    const targetY = sampleStage(profile.y, stage) * viewport.height + sculpturalLift;
+    const targetScale = sampleStage(profile.scale, stage) * viewport.height;
 
     model.position.x = THREE.MathUtils.damp(model.position.x, targetX, SCROLL_DAMPING, delta);
     model.position.y = THREE.MathUtils.damp(model.position.y, targetY, SCROLL_DAMPING, delta);
@@ -93,10 +128,14 @@ export const CameraRig: React.FC<CameraRigProps> = ({ mouse, onModelReady }) => 
     model.scale.setScalar(scale);
   });
 
-  const initialScale = viewport.height * SCALE_FACTORS[0];
+  const initialScale = viewport.height * profile.scale[0];
 
   return (
-    <group ref={modelRef} position={[viewport.width * X_FACTORS[0], 0, 0]} scale={initialScale}>
+    <group
+      ref={modelRef}
+      position={[viewport.width * profile.x[0], viewport.height * profile.y[0], 0]}
+      scale={initialScale}
+    >
       <PerfumeModel onReady={onModelReady} />
     </group>
   );

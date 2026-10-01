@@ -24,9 +24,11 @@ export const FinalSection: React.FC = () => {
           <p className="mt-5 text-xs tracking-[0.22em] text-champagne/78">{t.final.type} · {t.final.volume}</p>
         </header>
 
-        <div className="my-10 h-[420px] w-full sm:h-[500px]" aria-hidden="true">
-          <img src="/images/peacock-object.png" alt="" className="object-preview h-full w-full object-contain md:hidden" loading="lazy" />
-        </div>
+        <div
+          data-model-interaction-zone
+          className="my-10 h-[420px] w-full touch-none cursor-grab active:cursor-grabbing sm:h-[500px]"
+          aria-hidden="true"
+        />
 
         <div className="flex flex-col items-center">
           <div className="space-y-2 text-sm leading-6 tracking-[0.1em] text-ivory/72">

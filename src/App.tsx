@@ -17,17 +17,9 @@ const PerfumeCanvas = lazy(() =>
 
 export function AppContent() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [render3D, setRender3D] = useState(() => window.matchMedia('(min-width: 768px)').matches);
   const [modelReady, setModelReady] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
   const handleModelReady = useCallback(() => setModelReady(true), []);
-
-  useEffect(() => {
-    const media = window.matchMedia('(min-width: 768px)');
-    const handleChange = () => setRender3D(media.matches);
-    media.addEventListener('change', handleChange);
-    return () => media.removeEventListener('change', handleChange);
-  }, []);
 
   useEffect(() => {
     const hero = document.getElementById('hero');
@@ -99,9 +91,9 @@ export function AppContent() {
             ease: 'none',
             immediateRender: false,
             scrollTrigger: {
-              trigger: '#object',
-              start: 'top 94%',
-              end: 'top 68%',
+              trigger: '[data-object-stage]',
+              start: 'top 72%',
+              end: 'top 48%',
               scrub: 1.15,
               invalidateOnRefresh: true,
             },
@@ -154,7 +146,7 @@ export function AppContent() {
 
     ScrollTrigger.refresh();
     return () => ctx.revert();
-  }, [render3D]);
+  }, []);
 
   const handleDiscoverClick = () => {
     const el = document.getElementById('composition');
@@ -167,25 +159,23 @@ export function AppContent() {
     <div ref={containerRef} className="site-texture relative min-h-screen overflow-x-clip bg-[#0B0A0A] text-[#E8DDD0]">
       <div className="site-surface-layer" aria-hidden="true" />
       <Navigation />
-      {render3D ? (
-        <div
-          data-object-visual
-          className="pointer-events-none fixed inset-0 z-10 hidden overflow-hidden md:block"
-          aria-hidden="true"
-        >
-          <img
-            src="/images/peacock-object-glb-neutral.png"
-            alt=""
-            fetchPriority="high"
-            className={`hero-model-poster transition-opacity duration-300 ${
-              modelReady || !heroVisible ? 'opacity-0' : 'opacity-100'
-            }`}
-          />
-          <Suspense fallback={null}>
-            <PerfumeCanvas onModelReady={handleModelReady} />
-          </Suspense>
-        </div>
-      ) : null}
+      <div
+        data-object-visual
+        className="pointer-events-none fixed inset-0 z-10 overflow-hidden"
+        aria-hidden="true"
+      >
+        <img
+          src="/images/peacock-object-glb-neutral.png"
+          alt=""
+          fetchPriority="high"
+          className={`hero-model-poster transition-opacity duration-300 ${
+            modelReady || !heroVisible ? 'opacity-0' : 'opacity-100'
+          }`}
+        />
+        <Suspense fallback={null}>
+          <PerfumeCanvas onModelReady={handleModelReady} />
+        </Suspense>
+      </div>
       <main className="relative z-20">
         <HeroSection onDiscoverClick={handleDiscoverClick} />
         <CompositionSection />
