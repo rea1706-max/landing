@@ -11,9 +11,7 @@ export const CompositionSection: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="composition" className="section-anchor relative w-full border-b border-champagne/10 bg-[#100e0e]/78 px-5 py-24 md:px-10 md:py-32">
-      <div className="pointer-events-none absolute inset-x-0 -top-36 h-36 bg-gradient-to-b from-transparent to-[#100e0e]/80" aria-hidden="true" />
-      <div className="paper-texture absolute inset-0 opacity-50" aria-hidden="true" />
+    <section id="composition" className="section-anchor section-divider relative w-full px-5 py-24 md:px-10 md:py-32">
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-10 sm:grid-cols-3">
         {t.composition.arches.map((arch, index) => (
           <article key={arch.number} className="group" data-ingredient-card>

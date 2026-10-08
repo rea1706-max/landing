@@ -7,8 +7,7 @@ export const ObjectSection: React.FC = () => {
   const [firstDetail, ...otherDetails] = t.objectStory.details;
 
   return (
-    <section id="object" className="section-anchor relative flex min-h-[128vh] w-full flex-col justify-between overflow-hidden bg-[#0b0a0a]/35 px-5 py-24 md:min-h-[170vh] md:px-10 md:py-32">
-      <div className="paper-texture absolute inset-0 opacity-45" aria-hidden="true" />
+    <section id="object" className="section-anchor section-divider relative flex min-h-[128vh] w-full flex-col justify-between overflow-hidden px-5 py-24 md:min-h-[170vh] md:px-10 md:py-32">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_48%,rgba(82,71,66,0.14),transparent_42%)]" aria-hidden="true" />
       <div className="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-between">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">

@@ -51,8 +51,7 @@ export function AppContent() {
           },
         })
         .to('[data-hero-copy]', { y: -58, opacity: 0.24, filter: 'blur(2px)', ease: 'none' }, 0)
-        .to('[data-hero-meta]', { y: -18, opacity: 0, ease: 'none' }, 0)
-        .to('[data-hero-veil]', { opacity: 1, ease: 'none' }, 0);
+        .to('[data-hero-meta]', { y: -18, opacity: 0, ease: 'none' }, 0);
 
       if (objectVisual) {
         gsap.to(objectVisual, {

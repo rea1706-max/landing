@@ -15,7 +15,7 @@ export const FinalSection: React.FC = () => {
   }, [open]);
 
   return (
-    <section id="final" className="section-anchor relative flex min-h-[118vh] w-full flex-col items-center overflow-hidden bg-[#0a0909]/45 px-5 py-24 text-center md:px-10 md:py-32">
+    <section id="final" className="section-anchor section-divider relative flex min-h-[118vh] w-full flex-col items-center overflow-hidden px-5 py-24 text-center md:px-10 md:py-32">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_52%,rgba(113,96,82,0.13),transparent_36%)]" aria-hidden="true" />
       <div className="relative z-20 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-between" data-reveal>
         <header>

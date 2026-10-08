@@ -10,14 +10,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
 
   return (
     <section id="hero" className="relative flex min-h-[100svh] w-full items-center overflow-hidden px-5 pb-10 pt-36 md:px-10 md:pt-28">
-      <div className="paper-texture absolute inset-0 opacity-60" aria-hidden="true" />
-      <div className="absolute inset-y-0 right-0 hidden w-[55%] bg-[linear-gradient(90deg,transparent,rgba(74,53,67,0.12))] lg:block" aria-hidden="true" />
-      <div
-        data-hero-veil
-        className="absolute inset-x-0 bottom-0 h-[34vh] bg-gradient-to-b from-transparent via-[#100e0e]/35 to-[#100e0e]/95 opacity-0"
-        aria-hidden="true"
-      />
-
       <div className="relative z-20 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-12">
         <div className="order-2 flex max-w-xl flex-col items-start lg:order-1 lg:col-span-5" data-hero-copy>
           <p className="mb-7 text-[0.7rem] font-medium tracking-[0.24em] text-champagne/85">
@@ -62,7 +54,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
         </div>
       </div>
 
-      <div data-hero-meta className="absolute inset-x-5 bottom-6 z-20 hidden items-center justify-between border-t border-champagne/12 pt-4 text-[0.65rem] tracking-[0.2em] text-ivory/40 sm:flex md:inset-x-10">
+      <div data-hero-meta className="absolute inset-x-5 bottom-6 z-20 hidden items-center justify-between pt-4 text-[0.65rem] tracking-[0.2em] text-ivory/40 sm:flex md:inset-x-10">
         <span>PLUMAGE NOCTURNE</span>
         <span>{t.hero.meta}</span>
       </div>
