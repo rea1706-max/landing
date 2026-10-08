@@ -24,14 +24,14 @@ export const CompositionSection: React.FC = () => {
                 loading="lazy"
                 decoding="async"
                 data-ingredient-media
-                className="h-full w-full scale-[1.08] object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.12]"
+                className="arch-photograph h-full w-full scale-[1.08] object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.12]"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-[#0b0a0a]/72" aria-hidden="true" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,15,17,0.12),rgba(20,15,17,0.06)_45%,rgba(11,10,10,0.76))]" aria-hidden="true" />
             </figure>
             <div className="px-2 pt-6">
               <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-champagne">{arch.number} / {arch.topic}</p>
-              <h2 className="mt-3 font-serif text-3xl leading-tight text-ivory">{arch.title}</h2>
-              <p className="mt-4 text-sm leading-6 text-ivory/68">{arch.description}</p>
+              <h2 className="mt-3 font-serif text-[1.65rem] font-normal leading-[1.3] tracking-[-0.018em] text-ivory lg:text-[1.8rem]">{arch.title}</h2>
+              <p className="mt-4 text-[0.95rem] leading-7 text-ivory/68">{arch.description}</p>
               <p className="mt-5 text-[0.68rem] tracking-[0.12em] text-champagne/75">{arch.spec}</p>
             </div>
           </article>

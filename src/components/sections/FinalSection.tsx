@@ -19,7 +19,7 @@ export const FinalSection: React.FC = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_52%,rgba(113,96,82,0.13),transparent_36%)]" aria-hidden="true" />
       <div className="relative z-20 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-between" data-reveal>
         <header>
-          <h2 className="font-serif text-5xl font-light tracking-[0.03em] text-ivory sm:text-7xl lg:text-8xl">{t.final.brand}</h2>
+          <h2 className="font-serif text-[clamp(1.85rem,4.8vw,4.9rem)] font-normal leading-[1.25] tracking-[0.025em] text-ivory">{t.final.brand}</h2>
         </header>
 
         <div
@@ -29,7 +29,7 @@ export const FinalSection: React.FC = () => {
         />
 
         <div className="flex flex-col items-center">
-          <p className="max-w-xl font-serif text-2xl leading-tight text-ivory/78 sm:text-3xl">{t.final.statement}</p>
+          <p className="max-w-xl font-body text-2xl italic leading-[1.5] text-ivory/78 sm:text-3xl">{t.final.statement}</p>
           <button
             type="button"
             onClick={() => {
@@ -52,7 +52,7 @@ export const FinalSection: React.FC = () => {
           <div className="flex items-start justify-between gap-6 border-b border-champagne/14 pb-5">
             <div>
               <p className="text-[0.63rem] tracking-[0.2em] text-champagne/62">PLUMAGE NOCTURNE</p>
-              <h3 className="mt-2 font-serif text-3xl text-ivory">{submitted ? t.final.successTitle : t.final.inquiryTitle}</h3>
+              <h3 className="mt-2 font-serif text-2xl font-normal leading-snug text-ivory">{submitted ? t.final.successTitle : t.final.inquiryTitle}</h3>
             </div>
             <button
               type="button"

@@ -35,8 +35,8 @@ export default {
         },
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Prata', 'Georgia', 'serif'],
+        body: ['Lora', 'Georgia', 'serif'],
       },
       letterSpacing: {
         'luxury': '0.25em',

@@ -1,3 +1,5 @@
+@import './fonts.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,9 +25,11 @@
     min-width: 320px;
     background-color: var(--bg-primary);
     color: var(--ivory);
-    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    font-family: 'Lora', Georgia, serif;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.65;
+    font-optical-sizing: auto;
+    font-synthesis: none;
     overflow-x: hidden;
   }
 
@@ -55,6 +59,10 @@
 
 .section-anchor {
   scroll-margin-top: 6.5rem;
+}
+
+.arch-photograph {
+  filter: brightness(0.84) saturate(0.72) contrast(0.96);
 }
 
 .paper-texture {

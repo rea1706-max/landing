@@ -23,14 +23,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
           <p className="mb-7 text-[0.7rem] font-medium tracking-[0.24em] text-champagne/85">
             {t.hero.eyebrow}
           </p>
-          <h1 className="font-serif text-[clamp(3.25rem,8vw,7.4rem)] font-light leading-[0.8] tracking-[-0.025em] text-ivory">
+          <h1 className="font-serif text-[clamp(2.75rem,6.3vw,6.35rem)] font-normal leading-[1.12] tracking-[-0.045em] text-ivory">
             <span className="block">{t.hero.titleLine1}</span>
-            <span className="mt-4 block italic text-ivory/92">{t.hero.titleLine2}</span>
+            <span className="mt-1 block text-ivory/92">{t.hero.titleLine2}</span>
           </h1>
-          <p className="mt-9 max-w-md text-base leading-7 text-ivory/88 md:text-lg md:leading-8">
+          <p className="mt-8 max-w-md text-lg italic leading-8 text-ivory/88 md:text-xl">
             {t.hero.lead}
           </p>
-          <p className="mt-4 max-w-md text-sm leading-7 text-ivory/68 md:text-base">
+          <p className="mt-4 max-w-md text-[0.95rem] leading-7 text-ivory/68 md:text-base">
             {t.hero.description}
           </p>
           <div className="mt-9 flex flex-wrap gap-3">

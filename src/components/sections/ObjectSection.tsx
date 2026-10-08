@@ -13,7 +13,7 @@ export const ObjectSection: React.FC = () => {
       <div className="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-between">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="flex flex-col items-start lg:col-span-4" data-reveal>
-            <h2 className="font-serif text-4xl font-light leading-[0.98] tracking-[-0.02em] text-ivory sm:text-5xl lg:text-[clamp(2.2rem,3.2vw,3.4rem)]">
+            <h2 className="font-serif text-[1.85rem] font-normal leading-[1.25] tracking-[-0.025em] text-ivory sm:text-4xl lg:text-[clamp(1.75rem,2.2vw,2.3rem)]">
               {t.objectStory.title}
             </h2>
             <p className="mt-8 max-w-sm text-base leading-7 text-ivory/72">{t.objectStory.dayBody}</p>
@@ -29,16 +29,16 @@ export const ObjectSection: React.FC = () => {
 
           <aside className="self-start border border-champagne/16 bg-[#11100f] p-7 lg:col-span-3 lg:bg-[#11100f]/80 lg:backdrop-blur-md" data-reveal>
             <SectionLabel label={t.objectStory.detailsLabel} hasLine={false} />
-            <h3 className="mt-6 font-serif text-3xl leading-tight text-ivory">{firstDetail.title}</h3>
-            <p className="mt-5 text-sm leading-7 text-ivory/62">{firstDetail.description}</p>
+            <h3 className="mt-6 font-serif text-2xl font-normal leading-[1.35] text-ivory">{firstDetail.title}</h3>
+            <p className="mt-5 text-[0.95rem] leading-7 text-ivory/62">{firstDetail.description}</p>
           </aside>
         </div>
 
         <div className="my-16 grid grid-cols-1 gap-px border border-champagne/12 bg-champagne/12 md:grid-cols-3" data-reveal>
           {otherDetails.map((detail) => (
             <div key={detail.title} className="bg-[#0d0c0c] p-6 md:bg-[#0d0c0c]/92 md:p-7">
-              <h3 className="text-xs font-semibold tracking-[0.18em] text-champagne">{detail.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-ivory/55">{detail.description}</p>
+              <h3 className="font-serif text-xl font-normal leading-snug text-champagne">{detail.title}</h3>
+              <p className="mt-3 text-[0.95rem] leading-7 text-ivory/55">{detail.description}</p>
             </div>
           ))}
         </div>
