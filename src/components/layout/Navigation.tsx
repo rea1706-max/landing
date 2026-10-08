@@ -9,10 +9,9 @@ export const Navigation: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
 
   const items = [
-    ['hero', t.nav.home],
-    ['composition', t.nav.fragrance],
-    ['object', t.nav.object],
-    ['final', t.nav.order],
+    ['composition', t.nav.glow],
+    ['object', t.nav.details],
+    ['final', t.nav.availability],
   ];
 
   return (
@@ -69,7 +68,7 @@ export const Navigation: React.FC = () => {
         className="no-scrollbar flex gap-6 overflow-x-auto px-5 pb-3 text-[0.62rem] tracking-[0.18em] text-ivory/60 lg:hidden"
         aria-label="Primary mobile"
       >
-        {items.slice(1).map(([id, label]) => (
+        {items.map(([id, label]) => (
           <button
             key={id}
             type="button"

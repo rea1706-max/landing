@@ -19,9 +19,7 @@ export const FinalSection: React.FC = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_52%,rgba(113,96,82,0.13),transparent_36%)]" aria-hidden="true" />
       <div className="relative z-20 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-between" data-reveal>
         <header>
-          <p className="text-[0.66rem] tracking-[0.2em] text-champagne/60">{t.final.label}</p>
-          <h2 className="mt-6 font-serif text-5xl font-light tracking-[0.03em] text-ivory sm:text-7xl lg:text-8xl">{t.final.brand}</h2>
-          <p className="mt-5 text-xs tracking-[0.22em] text-champagne/78">{t.final.type} · {t.final.volume}</p>
+          <h2 className="font-serif text-5xl font-light tracking-[0.03em] text-ivory sm:text-7xl lg:text-8xl">{t.final.brand}</h2>
         </header>
 
         <div
@@ -31,11 +29,7 @@ export const FinalSection: React.FC = () => {
         />
 
         <div className="flex flex-col items-center">
-          <div className="space-y-2 text-sm leading-6 tracking-[0.1em] text-ivory/72">
-            <p>{t.final.summaryLine1}</p>
-            <p>{t.final.summaryLine2}</p>
-            <p>{t.final.summaryLine3}</p>
-          </div>
+          <p className="max-w-xl font-serif text-2xl leading-tight text-ivory/78 sm:text-3xl">{t.final.statement}</p>
           <button
             type="button"
             onClick={() => {
@@ -46,12 +40,6 @@ export const FinalSection: React.FC = () => {
           >
             {t.final.cta}
           </button>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-[0.65rem] tracking-[0.14em] text-ivory/42">
-            <span>{t.final.specs.origin}</span><span aria-hidden="true">·</span>
-            <span>{t.final.specs.concentration}</span><span aria-hidden="true">·</span>
-            <span>{t.final.specs.flacon}</span>
-          </div>
-          <p className="mt-6 text-[0.62rem] tracking-[0.18em] text-champagne/44">{t.final.editionNote}</p>
         </div>
       </div>
 

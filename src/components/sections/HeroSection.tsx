@@ -27,16 +27,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
             <span className="block">{t.hero.titleLine1}</span>
             <span className="mt-4 block italic text-ivory/92">{t.hero.titleLine2}</span>
           </h1>
-          <p className="mt-9 max-w-md text-base leading-7 text-ivory/68 md:text-lg md:leading-8">
-            {t.hero.subtitle}
+          <p className="mt-9 max-w-md text-base leading-7 text-ivory/88 md:text-lg md:leading-8">
+            {t.hero.lead}
           </p>
-          <button
-            type="button"
-            onClick={onDiscoverClick}
-            className="mt-9 border border-champagne/45 bg-[#12100f]/75 px-6 py-4 text-[0.7rem] font-semibold tracking-[0.2em] text-ivory transition-colors hover:border-ivory/65 hover:bg-ivory hover:text-[#0b0a0a] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-champagne"
-          >
-            {t.hero.cta}
-          </button>
+          <p className="mt-4 max-w-md text-sm leading-7 text-ivory/68 md:text-base">
+            {t.hero.description}
+          </p>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={onDiscoverClick}
+              className="border border-champagne/45 bg-[#12100f]/75 px-6 py-4 text-[0.7rem] font-semibold tracking-[0.12em] text-ivory transition-colors hover:border-ivory/65 hover:bg-ivory hover:text-[#0b0a0a] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-champagne"
+            >
+              {t.hero.exploreCta}
+            </button>
+            <button
+              type="button"
+              onClick={() => document.getElementById('final')?.scrollIntoView({ behavior: 'smooth' })}
+              className="border border-champagne/20 px-6 py-4 text-[0.7rem] font-semibold tracking-[0.12em] text-champagne transition-colors hover:border-ivory/65 hover:text-ivory focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-champagne"
+            >
+              {t.hero.availabilityCta}
+            </button>
+          </div>
+          <p className="mt-6 text-[0.62rem] tracking-[0.14em] text-ivory/45 sm:hidden">{t.hero.meta}</p>
         </div>
 
         <div className="order-1 flex items-center justify-center lg:order-2 lg:col-span-7">
@@ -51,8 +64,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
 
       <div data-hero-meta className="absolute inset-x-5 bottom-6 z-20 hidden items-center justify-between border-t border-champagne/12 pt-4 text-[0.65rem] tracking-[0.2em] text-ivory/40 sm:flex md:inset-x-10">
         <span>PLUMAGE NOCTURNE</span>
-        <span>{t.hero.metaEdition}</span>
-        <span>{t.hero.metaPlace}</span>
+        <span>{t.hero.meta}</span>
       </div>
     </section>
   );

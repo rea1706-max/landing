@@ -54,23 +54,6 @@ export function AppContent() {
         .to('[data-hero-meta]', { y: -18, opacity: 0, ease: 'none' }, 0)
         .to('[data-hero-veil]', { opacity: 1, ease: 'none' }, 0);
 
-      gsap.fromTo(
-        '[data-composition-intro]',
-        { y: 72, opacity: 0.16 },
-        {
-          y: 0,
-          opacity: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '#composition',
-            start: 'top 92%',
-            end: 'top 42%',
-            scrub: 1.35,
-            invalidateOnRefresh: true,
-          },
-        },
-      );
-
       if (objectVisual) {
         gsap.to(objectVisual, {
           opacity: 0,

@@ -23,6 +23,23 @@ export const PerfumeModel: React.FC<PerfumeModelProps> = ({ compact, modelUrl })
         const material = source.clone();
         if (material instanceof THREE.MeshStandardMaterial) {
           material.envMapIntensity = compact ? 0.98 : 0.82;
+          if (material.name === 'Bottle - Warm Ivory Frosted Glass') {
+            // Diffuse the warm internal light across the frosted shade while preserving its texture.
+            material.onBeforeCompile = (shader) => {
+              shader.vertexShader = shader.vertexShader
+                .replace('#include <common>', '#include <common>\nvarying vec3 vLampLocalPosition;')
+                .replace('#include <begin_vertex>', '#include <begin_vertex>\nvLampLocalPosition = position;');
+              shader.fragmentShader = shader.fragmentShader
+                .replace('#include <common>', '#include <common>\nvarying vec3 vLampLocalPosition;')
+                .replace(
+                  '#include <emissivemap_fragment>',
+                  `#include <emissivemap_fragment>
+                  vec2 lampGlowPoint = vec2(vLampLocalPosition.x / 0.60, (vLampLocalPosition.y + 0.28) / 0.85);
+                  float lampGlow = exp(-1.2 * dot(lampGlowPoint, lampGlowPoint));
+                  totalEmissiveRadiance += vec3(0.95, 0.48, 0.19) * lampGlow;`,
+                );
+            };
+          }
           material.needsUpdate = true;
         }
         return material;

@@ -24,6 +24,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   useEffect(() => {
     document.documentElement.lang = language;
+    document.title = `PLUMAGE NOCTURNE · ${translations[language].hero.eyebrow}`;
+    document.querySelector<HTMLMetaElement>('meta[name="description"]')?.setAttribute(
+      'content', `${translations[language].hero.lead} ${translations[language].hero.description}`,
+    );
   }, [language]);
 
   const value = {
