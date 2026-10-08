@@ -12,6 +12,8 @@ export const PerfumeModel: React.FC<PerfumeModelProps> = ({ compact, modelUrl })
 
   const prepared = useMemo(() => {
     const clone = scene.clone(true);
+    const shadeBounds = new THREE.Box3();
+    clone.updateMatrixWorld(true);
 
     clone.traverse((child) => {
       if (!(child instanceof THREE.Mesh)) return;
@@ -23,22 +25,16 @@ export const PerfumeModel: React.FC<PerfumeModelProps> = ({ compact, modelUrl })
         const material = source.clone();
         if (material instanceof THREE.MeshStandardMaterial) {
           material.envMapIntensity = compact ? 0.98 : 0.82;
-          if (material.name === 'Bottle - Warm Ivory Frosted Glass') {
-            // Diffuse the warm internal light across the frosted shade while preserving its texture.
-            material.onBeforeCompile = (shader) => {
-              shader.vertexShader = shader.vertexShader
-                .replace('#include <common>', '#include <common>\nvarying vec3 vLampLocalPosition;')
-                .replace('#include <begin_vertex>', '#include <begin_vertex>\nvLampLocalPosition = position;');
-              shader.fragmentShader = shader.fragmentShader
-                .replace('#include <common>', '#include <common>\nvarying vec3 vLampLocalPosition;')
-                .replace(
-                  '#include <emissivemap_fragment>',
-                  `#include <emissivemap_fragment>
-                  vec2 lampGlowPoint = vec2(vLampLocalPosition.x / 0.60, (vLampLocalPosition.y + 0.28) / 0.85);
-                  float lampGlow = exp(-1.2 * dot(lampGlowPoint, lampGlowPoint));
-                  totalEmissiveRadiance += vec3(0.95, 0.48, 0.19) * lampGlow;`,
-                );
-            };
+          if (material instanceof THREE.MeshPhysicalMaterial
+            && material.name === 'Bottle - Warm Ivory Frosted Glass') {
+            shadeBounds.union(new THREE.Box3().setFromObject(child));
+            // The shade transmits a separate light source inside the model.
+            material.emissive.setRGB(0, 0, 0);
+            material.transmission = 0.7;
+            material.roughness = 0.9;
+            material.thickness = 0.18;
+            material.attenuationColor.set('#ffe9c8');
+            material.attenuationDistance = 1.6;
           }
           material.needsUpdate = true;
         }
@@ -52,10 +48,15 @@ export const PerfumeModel: React.FC<PerfumeModelProps> = ({ compact, modelUrl })
     const center = bounds.getCenter(new THREE.Vector3());
     const size = bounds.getSize(new THREE.Vector3());
     clone.position.sub(center);
+    const shadeSize = shadeBounds.getSize(new THREE.Vector3());
+    const lightCenter = shadeBounds.getCenter(new THREE.Vector3()).sub(center);
+    lightCenter.y = shadeBounds.min.y + shadeSize.y * 0.45 - center.y;
 
     return {
       clone,
       normalizationScale: size.y > 0 ? 1 / size.y : 1,
+      lightCenter,
+      lightScale: new THREE.Vector3(shadeSize.x * 0.27, shadeSize.y * 0.3, shadeSize.z * 0.27),
     };
   }, [compact, scene]);
 
@@ -70,11 +71,13 @@ export const PerfumeModel: React.FC<PerfumeModelProps> = ({ compact, modelUrl })
   }, [prepared]);
 
   return (
-    <>
-      <group scale={prepared.normalizationScale}>
-        <primitive object={prepared.clone} />
-      </group>
-      <pointLight position={[0, -0.06, 0.16]} color="#d9ad78" intensity={0.85} distance={1.8} decay={2} />
-    </>
+    <group scale={prepared.normalizationScale}>
+      <primitive object={prepared.clone} />
+      <mesh position={prepared.lightCenter} scale={prepared.lightScale}>
+        <sphereGeometry args={[1, 24, 16]} />
+        <meshBasicMaterial color={[18, 10, 4.2]} toneMapped={false} />
+      </mesh>
+      <pointLight position={prepared.lightCenter} color="#ffd294" intensity={0.65} distance={1.1} decay={2} />
+    </group>
   );
 };

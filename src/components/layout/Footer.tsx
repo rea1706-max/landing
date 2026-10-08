@@ -15,8 +15,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <nav className="flex flex-wrap gap-x-7 gap-y-3 text-[0.66rem] tracking-[0.16em] text-champagne/72" aria-label="Footer">
-            <button type="button" onClick={() => goTo('composition')} className="hover:text-ivory focus-visible:outline focus-visible:outline-1 focus-visible:outline-champagne">{t.footer.glow}</button>
-            <button type="button" onClick={() => goTo('object')} className="hover:text-ivory focus-visible:outline focus-visible:outline-1 focus-visible:outline-champagne">{t.footer.details}</button>
+            <button type="button" onClick={() => goTo('composition')} className="hover:text-ivory focus-visible:outline focus-visible:outline-1 focus-visible:outline-champagne">{t.footer.details}</button>
             <button type="button" onClick={() => goTo('final')} className="hover:text-ivory focus-visible:outline focus-visible:outline-1 focus-visible:outline-champagne">{t.footer.availability}</button>
           </nav>
 

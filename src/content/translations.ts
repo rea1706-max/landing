@@ -3,7 +3,7 @@ import type { TranslationContent } from '../types';
 export const translations: Record<'ru' | 'en', TranslationContent> = {
   ru: {
     nav: {
-      brand: 'PLUMAGE', brandSub: 'NOCTURNE', glow: 'СВЕЧЕНИЕ',
+      brand: 'PLUMAGE', brandSub: 'NOCTURNE',
       details: 'ДЕТАЛИ', availability: 'ЗАПРОСИТЬ НАЛИЧИЕ', languageLabel: 'Выбор языка',
     },
     hero: {
@@ -11,7 +11,7 @@ export const translations: Record<'ru' | 'en', TranslationContent> = {
       titleLine1: 'PLUMAGE', titleLine2: 'NOCTURNE',
       lead: 'Тёплое сияние в выразительном силуэте.',
       description: 'Рифлёный плафон мягко рассеивает свет, а металлическая композиция с павлинами превращает функциональный предмет в заметный акцент интерьера.',
-      exploreCta: 'Открыть коллекцию', availabilityCta: 'Запросить наличие',
+      exploreCta: 'Детали', availabilityCta: 'Запросить наличие',
       meta: '2700K · регулируемая яркость · лимитированный выпуск',
       imageAlt: 'Скульптурный светильник Plumage Nocturne с двумя павлинами и светящимся плафоном',
     },
@@ -56,13 +56,13 @@ export const translations: Record<'ru' | 'en', TranslationContent> = {
       privacyNote: 'Контакт используется только для ответа по этому запросу.', closeLabel: 'Закрыть',
     },
     footer: {
-      copyright: '© 2026 PLUMAGE NOCTURNE.', glow: 'СВЕЧЕНИЕ',
+      copyright: '© 2026 PLUMAGE NOCTURNE.',
       details: 'ДЕТАЛИ', availability: 'ЗАПРОСИТЬ НАЛИЧИЕ',
     },
   },
   en: {
     nav: {
-      brand: 'PLUMAGE', brandSub: 'NOCTURNE', glow: 'GLOW',
+      brand: 'PLUMAGE', brandSub: 'NOCTURNE',
       details: 'DETAILS', availability: 'REQUEST AVAILABILITY', languageLabel: 'Choose language',
     },
     hero: {
@@ -70,7 +70,7 @@ export const translations: Record<'ru' | 'en', TranslationContent> = {
       titleLine1: 'PLUMAGE', titleLine2: 'NOCTURNE',
       lead: 'Warm illumination in a distinctive silhouette.',
       description: 'A ribbed shade softens the source, while the peacock metalwork gives the piece a strong presence within the interior.',
-      exploreCta: 'Explore the edition', availabilityCta: 'Request availability',
+      exploreCta: 'Details', availabilityCta: 'Request availability',
       meta: '2700K · dimmable · limited edition',
       imageAlt: 'Sculptural Plumage Nocturne light with two peacocks and an illuminated shade',
     },
@@ -115,7 +115,7 @@ export const translations: Record<'ru' | 'en', TranslationContent> = {
       privacyNote: 'Your contact is used only to answer this request.', closeLabel: 'Close',
     },
     footer: {
-      copyright: '© 2026 PLUMAGE NOCTURNE.', glow: 'GLOW',
+      copyright: '© 2026 PLUMAGE NOCTURNE.',
       details: 'DETAILS', availability: 'REQUEST AVAILABILITY',
     },
   },

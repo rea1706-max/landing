@@ -4,7 +4,6 @@ export interface TranslationContent {
   nav: {
     brand: string;
     brandSub: string;
-    glow: string;
     details: string;
     availability: string;
     languageLabel: string;
@@ -52,7 +51,6 @@ export interface TranslationContent {
   };
   footer: {
     copyright: string;
-    glow: string;
     details: string;
     availability: string;
   };

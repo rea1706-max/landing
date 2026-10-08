@@ -9,8 +9,7 @@ export const Navigation: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
 
   const items = [
-    ['composition', t.nav.glow],
-    ['object', t.nav.details],
+    ['composition', t.nav.details],
     ['final', t.nav.availability],
   ];
 
