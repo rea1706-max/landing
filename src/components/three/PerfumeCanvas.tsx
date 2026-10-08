@@ -1,6 +1,5 @@
-import React, { Suspense, useEffect, useRef } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Environment } from '@react-three/drei';
 import { CameraRig } from './CameraRig';
 import { Lighting } from './Lighting';
 
@@ -14,13 +13,25 @@ export interface PointerMotion {
   pitch: number;
   lastX: number;
   lastY: number;
+  startX: number;
+  startY: number;
 }
 
 interface PerfumeCanvasProps {
   onModelReady: () => void;
+  onModelUnavailable: () => void;
 }
 
-export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({ onModelReady }) => {
+const isCompactDevice = () => (
+  window.innerWidth < 1024 || window.matchMedia('(pointer: coarse)').matches
+);
+
+export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({
+  onModelReady,
+  onModelUnavailable,
+}) => {
+  const [compact, setCompact] = useState(isCompactDevice);
+  const compactRef = useRef(compact);
   const pointer = useRef<PointerMotion>({
     x: 0,
     y: 0,
@@ -31,7 +42,28 @@ export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({ onModelReady }) =>
     pitch: 0,
     lastX: 0,
     lastY: 0,
+    startX: 0,
+    startY: 0,
   });
+
+  useEffect(() => {
+    const coarseQuery = window.matchMedia('(pointer: coarse)');
+    const updateDeviceProfile = () => {
+      const nextCompact = isCompactDevice();
+      if (compactRef.current === nextCompact) return;
+      compactRef.current = nextCompact;
+      onModelUnavailable();
+      setCompact(nextCompact);
+    };
+
+    window.addEventListener('resize', updateDeviceProfile);
+    coarseQuery.addEventListener('change', updateDeviceProfile);
+    return () => {
+      window.removeEventListener('resize', updateDeviceProfile);
+      coarseQuery.removeEventListener('change', updateDeviceProfile);
+    };
+  }, [onModelUnavailable]);
+
   useEffect(() => {
     const coarseQuery = window.matchMedia('(pointer: coarse)');
     const interactionZones = Array.from(
@@ -71,13 +103,15 @@ export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({ onModelReady }) =>
       const isPrimaryMouseButton = event.pointerType !== 'mouse' || event.button === 0;
       if (!isPrimaryMouseButton || pointer.current.dragging || !isInsideObjectZone(event.clientX, event.clientY)) return;
 
-      event.preventDefault();
+      if (event.pointerType === 'mouse' && event.cancelable) event.preventDefault();
       pointer.current.dragging = true;
       pointer.current.active = 1;
       pointer.current.x = Math.min(1, Math.max(-1, (event.clientX / window.innerWidth) * 2 - 1));
       pointer.current.y = Math.min(1, Math.max(-1, (event.clientY / window.innerHeight) * 2 - 1));
       pointer.current.lastX = event.clientX;
       pointer.current.lastY = event.clientY;
+      pointer.current.startX = event.clientX;
+      pointer.current.startY = event.clientY;
       document.body.style.userSelect = 'none';
       if (event.pointerType === 'mouse') document.body.style.cursor = 'grabbing';
     };
@@ -89,6 +123,19 @@ export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({ onModelReady }) =>
       pointer.current.y = Math.min(1, Math.max(-1, (event.clientY / window.innerHeight) * 2 - 1));
 
       if (pointer.current.dragging) {
+        const totalX = event.clientX - pointer.current.startX;
+        const totalY = event.clientY - pointer.current.startY;
+
+        if (
+          event.pointerType !== 'mouse'
+          && Math.abs(totalY) > 10
+          && Math.abs(totalY) > Math.abs(totalX) * 1.15
+        ) {
+          pointer.current.active = 0;
+          releaseDrag();
+          return;
+        }
+
         if (event.cancelable) event.preventDefault();
         const deltaX = event.clientX - pointer.current.lastX;
         const deltaY = event.clientY - pointer.current.lastY;
@@ -138,20 +185,31 @@ export const PerfumeCanvas: React.FC<PerfumeCanvasProps> = ({ onModelReady }) =>
     };
   }, []);
 
+  const modelUrl = compact
+    ? '/models/peacock-lantern-mobile.glb'
+    : '/models/peacock-lantern-desktop.glb';
+
   return (
       <Canvas
+        key={modelUrl}
         className="absolute inset-0"
         camera={{ position: [0, 0, 5.2], fov: 32, near: 0.1, far: 100 }}
-        dpr={[1, 1.3]}
-        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        dpr={compact ? 1 : [1, 1.25]}
+        performance={{ min: 0.55 }}
+        gl={{ antialias: !compact, alpha: true, powerPreference: 'high-performance' }}
         onCreated={({ gl }) => {
-          gl.toneMappingExposure = 1.08;
+          gl.toneMappingExposure = compact ? 1.04 : 1.08;
+          gl.domElement.addEventListener('webglcontextlost', onModelUnavailable, { once: true });
         }}
       >
-        <Lighting mouse={pointer} />
+        <Lighting mouse={pointer} compact={compact} />
         <Suspense fallback={null}>
-          <CameraRig mouse={pointer} onModelReady={onModelReady} />
-          <Environment preset="warehouse" environmentIntensity={0.68} />
+          <CameraRig
+            mouse={pointer}
+            compact={compact}
+            modelUrl={modelUrl}
+            onModelReady={onModelReady}
+          />
         </Suspense>
       </Canvas>
   );

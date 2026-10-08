@@ -16,7 +16,7 @@ export const Navigation: React.FC = () => {
   ];
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-champagne/10 bg-[#0b0a0a]/95 backdrop-blur-md lg:border-b-0 lg:bg-transparent lg:backdrop-blur-none">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 pb-3 pt-4 md:px-10 md:py-5">
         <button
           type="button"

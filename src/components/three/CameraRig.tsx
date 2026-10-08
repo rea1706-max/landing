@@ -6,6 +6,8 @@ import type { PointerMotion } from './PerfumeCanvas';
 
 interface CameraRigProps {
   mouse: MutableRefObject<PointerMotion>;
+  compact: boolean;
+  modelUrl: string;
   onModelReady: () => void;
 }
 
@@ -25,14 +27,14 @@ interface MotionProfile {
 
 const MOBILE_PROFILE: MotionProfile = {
   x: [0, -0.02, 0, 0],
-  y: [0.18, 0.08, 0.02, -0.18],
-  scale: [0.34, 0.3, 0.5, 0.46],
+  y: [0.16, 0.07, 0.08, -0.16],
+  scale: [0.44, 0.38, 0.44, 0.5],
 };
 
 const TABLET_PROFILE: MotionProfile = {
   x: [0, -0.03, 0, 0],
-  y: [0.18, 0.08, 0.02, -0.14],
-  scale: [0.42, 0.36, 0.56, 0.52],
+  y: [0.16, 0.07, 0.02, -0.14],
+  scale: [0.48, 0.42, 0.58, 0.54],
 };
 
 const DESKTOP_PROFILE: MotionProfile = {
@@ -53,11 +55,18 @@ const sampleStage = (values: number[], stage: number) => {
   return THREE.MathUtils.lerp(values[from], values[to], stage - from);
 };
 
-export const CameraRig: React.FC<CameraRigProps> = ({ mouse, onModelReady }) => {
+export const CameraRig: React.FC<CameraRigProps> = ({ mouse, compact, modelUrl, onModelReady }) => {
   const { camera, size, viewport } = useThree();
   const modelRef = useRef<THREE.Group>(null);
   const sectionTops = useRef<number[]>([]);
+  const renderedFrames = useRef(0);
+  const readySignalled = useRef(false);
   const profile = getMotionProfile(size.width);
+
+  useEffect(() => {
+    renderedFrames.current = 0;
+    readySignalled.current = false;
+  }, [modelUrl]);
 
   useEffect(() => {
     const measureSections = () => {
@@ -81,7 +90,17 @@ export const CameraRig: React.FC<CameraRigProps> = ({ mouse, onModelReady }) => 
   useFrame(({ clock }, delta) => {
     const model = modelRef.current;
     const tops = sectionTops.current;
-    if (!model || tops.length !== SECTION_IDS.length) return;
+    if (!model) return;
+
+    if (!readySignalled.current) {
+      renderedFrames.current += 1;
+      if (renderedFrames.current >= 2) {
+        readySignalled.current = true;
+        onModelReady();
+      }
+    }
+
+    if (tops.length !== SECTION_IDS.length) return;
 
     const scrollY = window.scrollY;
     let stage = 0;
@@ -136,7 +155,7 @@ export const CameraRig: React.FC<CameraRigProps> = ({ mouse, onModelReady }) => 
       position={[viewport.width * profile.x[0], viewport.height * profile.y[0], 0]}
       scale={initialScale}
     >
-      <PerfumeModel onReady={onModelReady} />
+      <PerfumeModel compact={compact} modelUrl={modelUrl} />
     </group>
   );
 };

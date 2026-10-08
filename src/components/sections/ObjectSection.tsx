@@ -26,11 +26,11 @@ export const ObjectSection: React.FC = () => {
           <div
             data-object-stage
             data-model-interaction-zone
-            className="min-h-[58svh] touch-none cursor-grab active:cursor-grabbing md:min-h-[68vh] lg:col-span-5"
+            className="min-h-[58svh] touch-pan-y cursor-grab active:cursor-grabbing md:min-h-[68vh] lg:col-span-5"
             aria-hidden="true"
           />
 
-          <aside className="self-start border border-champagne/16 bg-[#11100f]/80 p-7 backdrop-blur-md lg:col-span-3" data-reveal>
+          <aside className="self-start border border-champagne/16 bg-[#11100f] p-7 lg:col-span-3 lg:bg-[#11100f]/80 lg:backdrop-blur-md" data-reveal>
             <SectionLabel label={t.objectStory.storyLabel} hasLine={false} />
             <h3 className="mt-6 font-serif text-3xl leading-tight text-ivory">{t.objectStory.storyTitle}</h3>
             <p className="mt-5 text-sm leading-7 text-ivory/62">{t.objectStory.storyBody}</p>
@@ -39,7 +39,7 @@ export const ObjectSection: React.FC = () => {
 
         <div className="my-16 grid grid-cols-1 gap-px border border-champagne/12 bg-champagne/12 md:grid-cols-3" data-reveal>
           {[0, 2, 4].map((index) => (
-            <div key={labels[index]} className="bg-[#0d0c0c]/92 p-6 md:p-7">
+            <div key={labels[index]} className="bg-[#0d0c0c] p-6 md:bg-[#0d0c0c]/92 md:p-7">
               <h3 className="text-xs font-semibold tracking-[0.18em] text-champagne">{labels[index]}</h3>
               <p className="mt-3 text-sm leading-6 text-ivory/55">{labels[index + 1]}</p>
             </div>

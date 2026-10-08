@@ -113,7 +113,7 @@
   position: absolute;
   left: 50vw;
   top: 15svh;
-  height: 34svh;
+  height: 44svh;
   width: auto;
   max-width: 92vw;
   transform: translateX(-50%);
@@ -125,7 +125,7 @@
   .hero-model-poster {
     left: 50vw;
     top: 11vh;
-    height: 42vh;
+    height: 48vh;
     max-width: 72vw;
   }
 }

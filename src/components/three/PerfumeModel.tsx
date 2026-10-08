@@ -3,11 +3,12 @@ import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface PerfumeModelProps {
-  onReady: () => void;
+  compact: boolean;
+  modelUrl: string;
 }
 
-export const PerfumeModel: React.FC<PerfumeModelProps> = ({ onReady }) => {
-  const { scene } = useGLTF('/models/peacock-lantern.glb');
+export const PerfumeModel: React.FC<PerfumeModelProps> = ({ compact, modelUrl }) => {
+  const { scene } = useGLTF(modelUrl);
 
   const prepared = useMemo(() => {
     const clone = scene.clone(true);
@@ -21,7 +22,7 @@ export const PerfumeModel: React.FC<PerfumeModelProps> = ({ onReady }) => {
       const materials = sourceMaterials.map((source) => {
         const material = source.clone();
         if (material instanceof THREE.MeshStandardMaterial) {
-          material.envMapIntensity = 0.75;
+          material.envMapIntensity = compact ? 0.98 : 0.82;
           material.needsUpdate = true;
         }
         return material;
@@ -39,10 +40,9 @@ export const PerfumeModel: React.FC<PerfumeModelProps> = ({ onReady }) => {
       clone,
       normalizationScale: size.y > 0 ? 1 / size.y : 1,
     };
-  }, [scene]);
+  }, [compact, scene]);
 
   useEffect(() => {
-    onReady();
     return () => {
       prepared.clone.traverse((child) => {
         if (!(child instanceof THREE.Mesh)) return;
@@ -50,7 +50,7 @@ export const PerfumeModel: React.FC<PerfumeModelProps> = ({ onReady }) => {
         materials.forEach((material) => material.dispose());
       });
     };
-  }, [onReady, prepared]);
+  }, [prepared]);
 
   return (
     <>

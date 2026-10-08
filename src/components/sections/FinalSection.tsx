@@ -26,7 +26,7 @@ export const FinalSection: React.FC = () => {
 
         <div
           data-model-interaction-zone
-          className="my-10 h-[420px] w-full touch-none cursor-grab active:cursor-grabbing sm:h-[500px]"
+          className="my-10 h-[420px] w-full touch-pan-y cursor-grab active:cursor-grabbing sm:h-[500px]"
           aria-hidden="true"
         />
 

@@ -7,7 +7,7 @@ export const Footer: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="relative z-30 border-t border-champagne/12 bg-[#090808]/86 px-5 py-14 text-ivory/55 backdrop-blur-sm md:px-10">
+    <footer className="relative z-30 border-t border-champagne/12 bg-[#090808] px-5 py-14 text-ivory/55 md:bg-[#090808]/86 md:px-10 md:backdrop-blur-sm">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-9 md:grid-cols-[1.4fr_auto_1fr] md:items-start">
           <div>

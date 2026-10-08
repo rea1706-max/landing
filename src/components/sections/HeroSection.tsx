@@ -42,7 +42,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
         <div className="order-1 flex items-center justify-center lg:order-2 lg:col-span-7">
           <div
             data-model-interaction-zone
-            className="relative h-[34svh] min-h-[250px] w-full touch-none cursor-grab active:cursor-grabbing md:h-[42svh] md:max-h-[460px] md:min-h-[320px] lg:h-[76vh] lg:max-h-none lg:min-h-0"
+            className="relative h-[34svh] min-h-[250px] w-full touch-pan-y cursor-grab active:cursor-grabbing md:h-[42svh] md:max-h-[460px] md:min-h-[320px] lg:h-[76vh] lg:max-h-none lg:min-h-0"
           >
             <span className="sr-only">{t.hero.imageAlt}</span>
           </div>

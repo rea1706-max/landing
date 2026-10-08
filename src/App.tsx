@@ -20,6 +20,7 @@ export function AppContent() {
   const [modelReady, setModelReady] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
   const handleModelReady = useCallback(() => setModelReady(true), []);
+  const handleModelUnavailable = useCallback(() => setModelReady(false), []);
 
   useEffect(() => {
     const hero = document.getElementById('hero');
@@ -173,7 +174,10 @@ export function AppContent() {
           }`}
         />
         <Suspense fallback={null}>
-          <PerfumeCanvas onModelReady={handleModelReady} />
+          <PerfumeCanvas
+            onModelReady={handleModelReady}
+            onModelUnavailable={handleModelUnavailable}
+          />
         </Suspense>
       </div>
       <main className="relative z-20">
