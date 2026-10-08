@@ -6,15 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0B0A0A" />
     <meta name="description" content="Plumage Nocturne — скульптурный светильник с тёплым светом, рифлёным плафоном и металлической композицией с павлинами." />
-    <link rel="preload" as="image" href="/images/site-background-texture.png" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/peacock-object-glb-neutral.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/lamp-lit-mobile.webp" media="(max-width: 767px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/lamp-lit-tablet.webp" media="(min-width: 768px) and (max-width: 1023px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/lamp-lit-desktop.webp" media="(min-width: 1024px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/site-background-texture.png" />
+    <link rel="preload" as="fetch" href="/models/peacock-lantern-mobile.glb" media="(max-width: 1023px), (pointer: coarse)" crossorigin fetchpriority="low" />
+    <link rel="preload" as="fetch" href="/models/peacock-lantern-desktop.glb" media="(min-width: 1024px) and (pointer: fine)" crossorigin fetchpriority="low" />
     <title>PLUMAGE NOCTURNE · Скульптурный светильник</title>
     
     <link rel="preload" href="/fonts/prata-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/lora-normal-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/golos-text-normal-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body class="bg-[#0B0A0A] text-[#E8DDD0] antialiased overflow-x-hidden selection:bg-[#4A3543] selection:text-[#E8DDD0]">
-    <div id="root"></div>
+    <div id="root">
+      <div aria-hidden="true" style="position:fixed;inset:0;pointer-events:none">
+        <picture>
+          <source media="(max-width: 767px)" srcset="/images/lamp-lit-mobile.webp" />
+          <source media="(max-width: 1023px)" srcset="/images/lamp-lit-tablet.webp" />
+          <img class="hero-model-poster" src="/images/lamp-lit-desktop.webp" alt="" fetchpriority="high" decoding="sync" />
+        </picture>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

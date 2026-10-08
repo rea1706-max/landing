@@ -29,7 +29,7 @@ export const FinalSection: React.FC = () => {
         />
 
         <div className="flex flex-col items-center">
-          <p className="max-w-xl font-body text-2xl italic leading-[1.5] text-ivory/78 sm:text-3xl">{t.final.statement}</p>
+          <p className="max-w-xl font-body text-[1.35rem] font-normal leading-[1.55] tracking-[0.015em] text-ivory/78 sm:text-[1.6rem]">{t.final.statement}</p>
           <button
             type="button"
             onClick={() => {

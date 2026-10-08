@@ -36,7 +36,7 @@ export default {
       },
       fontFamily: {
         serif: ['Prata', 'Georgia', 'serif'],
-        body: ['Lora', 'Georgia', 'serif'],
+        body: ['"Golos Text"', 'Arial', 'sans-serif'],
       },
       letterSpacing: {
         'luxury': '0.25em',

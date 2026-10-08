@@ -27,7 +27,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onDiscoverClick }) => 
             <span className="block">{t.hero.titleLine1}</span>
             <span className="mt-1 block text-ivory/92">{t.hero.titleLine2}</span>
           </h1>
-          <p className="mt-8 max-w-md text-lg italic leading-8 text-ivory/88 md:text-xl">
+          <p className="mt-8 max-w-md text-lg font-normal leading-8 tracking-[0.01em] text-ivory/88 md:text-xl">
             {t.hero.lead}
           </p>
           <p className="mt-4 max-w-md text-[0.95rem] leading-7 text-ivory/68 md:text-base">

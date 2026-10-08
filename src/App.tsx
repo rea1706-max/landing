@@ -148,20 +148,31 @@ export function AppContent() {
         className="pointer-events-none fixed inset-0 z-10 overflow-hidden"
         aria-hidden="true"
       >
-        <img
-          src="/images/peacock-object-glb-neutral.png"
-          alt=""
-          fetchPriority="high"
-          className={`hero-model-poster transition-opacity duration-300 ${
-            modelReady || !heroVisible ? 'opacity-0' : 'opacity-100'
-          }`}
-        />
-        <Suspense fallback={null}>
-          <PerfumeCanvas
-            onModelReady={handleModelReady}
-            onModelUnavailable={handleModelUnavailable}
+        <picture>
+          <source media="(max-width: 767px)" srcSet="/images/lamp-lit-mobile.webp" />
+          <source media="(max-width: 1023px)" srcSet="/images/lamp-lit-tablet.webp" />
+          <img
+            src="/images/lamp-lit-desktop.webp"
+            alt=""
+            fetchPriority="high"
+            decoding="sync"
+            className={`hero-model-poster transition-opacity duration-300 ${
+              modelReady || !heroVisible ? 'opacity-0' : 'opacity-100'
+            }`}
           />
-        </Suspense>
+        </picture>
+        <div
+          data-model-canvas
+          data-ready={modelReady}
+          className={`absolute inset-0 transition-opacity duration-300 ${modelReady ? 'opacity-100' : 'opacity-0'}`}
+        >
+          <Suspense fallback={null}>
+            <PerfumeCanvas
+              onModelReady={handleModelReady}
+              onModelUnavailable={handleModelUnavailable}
+            />
+          </Suspense>
+        </div>
       </div>
       <main className="relative z-20">
         <HeroSection onDiscoverClick={handleDiscoverClick} />

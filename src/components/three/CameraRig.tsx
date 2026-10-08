@@ -61,11 +61,15 @@ export const CameraRig: React.FC<CameraRigProps> = ({ mouse, compact, modelUrl, 
   const sectionTops = useRef<number[]>([]);
   const renderedFrames = useRef(0);
   const readySignalled = useRef(false);
+  const readyFrame = useRef<number>();
   const profile = getMotionProfile(size.width);
 
   useEffect(() => {
     renderedFrames.current = 0;
     readySignalled.current = false;
+    return () => {
+      if (readyFrame.current !== undefined) cancelAnimationFrame(readyFrame.current);
+    };
   }, [modelUrl]);
 
   useEffect(() => {
@@ -94,9 +98,12 @@ export const CameraRig: React.FC<CameraRigProps> = ({ mouse, compact, modelUrl, 
 
     if (!readySignalled.current) {
       renderedFrames.current += 1;
-      if (renderedFrames.current >= 2) {
+      if (renderedFrames.current >= 3) {
         readySignalled.current = true;
-        onModelReady();
+        readyFrame.current = requestAnimationFrame(() => {
+          readyFrame.current = undefined;
+          onModelReady();
+        });
       }
     }
 
